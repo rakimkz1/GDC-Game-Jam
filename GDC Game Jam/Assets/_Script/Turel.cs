@@ -26,7 +26,7 @@ public class Turel : MonoBehaviour
         if (currentTarget == null || isShootable == false)
             return;
 
-        GameObject bullet = Instantiate(bulletPrefab, turelPoint.position, turelRotation);
+        GameObject bullet = BulletPool.instance.GetBullet(turelPoint.position, turelRotation);
         bullet.GetComponent<Bullet>().damage = Damage;
 
         StartCoroutine(WaitShoot());

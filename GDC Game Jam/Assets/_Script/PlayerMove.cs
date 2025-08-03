@@ -7,8 +7,8 @@ public class PlayerMove : MonoBehaviour
     public float Speed;
     public Vector3 Diraction;
     public bool isMoveable;
-    [SerializeField]
-    private GameObject playerBody;
+    [SerializeField] private GameObject playerBody;
+    [SerializeField] private Animator anim;
     private Rigidbody rb;
 
     private void Start ()
@@ -45,6 +45,15 @@ public class PlayerMove : MonoBehaviour
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
-        if(isMoveable) rb.velocity = new Vector3(x, 0f, y) * Speed; 
+        if(isMoveable)
+        {
+            rb.velocity = new Vector3(x, 0f, y) * Speed;
+            rb.velocity = Vector3.ClampMagnitude(rb.velocity, Speed);
+        }
+
+        if (x != 0f || y != 0f)
+            anim.SetBool("Run", true);
+        else
+            anim.SetBool("Run", false);
     }
 }

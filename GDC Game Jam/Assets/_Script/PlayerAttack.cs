@@ -14,6 +14,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootStartPoint;
     [SerializeField] private TextMeshProUGUI bullet_txt;
+    [SerializeField] private Animator anim;
     private PlayerMove playerMove;
     private bool shootable = true;
 
@@ -36,9 +37,10 @@ public class PlayerAttack : MonoBehaviour
             Vector3 diraction = playerMove.Diraction;
             float angle = Mathf.Atan2(diraction.x, diraction.z) * Mathf.Rad2Deg;
             Quaternion rotate = Quaternion.Euler(0f, angle, 0f);
-            GameObject target = Instantiate(bulletPrefab, shootStartPoint.position, rotate);
+            GameObject target = BulletPool.instance.GetBullet(shootStartPoint.position, rotate);    
             target.GetComponent<Bullet>().damage = damage;
             bulletNumber --;
+            anim.SetTrigger("Shoot");
             ShowBulletNumber();
         }
     }

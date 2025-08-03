@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     public void Damage(float damage)
     {
         hp-=damage;
-        rb.AddForce((target.position - transform.position).normalized * pushForce);
+        rb.AddForce(-(target.position - transform.position).normalized * pushForce);
         if (hp <= 0f)
             DestroyEnemy(true);
         StopCoroutine(StanTime());
