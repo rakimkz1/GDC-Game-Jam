@@ -15,4 +15,9 @@ public class ResourceColection : MonoBehaviour
         resourceNumber += number;
         txt_Score.text = resourceNumber.ToString();
     }
+    public void RemoveResource(int number)
+    {
+        resourceNumber -= number;
+        txt_Score.text = resourceNumber.ToString();
+    }
 }

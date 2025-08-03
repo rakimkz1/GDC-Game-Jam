@@ -12,16 +12,22 @@ public class WhaleMenu : MonoBehaviour
     public bool isAproach;
     public float radious;
     [SerializeField] private GameObject menuCanvas;
-    [SerializeField] private TextMeshPro upgrate_txt;
+    [SerializeField] private TextMeshProUGUI upgrate_txt;
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerMove playerMove;
     [SerializeField] private Whale whale;
+    [SerializeField] private RoundSystem round;
     public BuyType currentType;
     public int currectIndex;
     public int[] BuyCosts;
     public string[] upgrateTexts;
     public int bulletNumber;
     public int HealAmount;
+    public float attackDamageProportion;
+    public float attackSpeedProportion;
+    public GameObject turelPrefab;
+    public Transform[] turelPoint;
+    private int turelNumber;
     private void Update()
     {
         CheckPlayer();
@@ -51,6 +57,9 @@ public class WhaleMenu : MonoBehaviour
                 case BuyType.UpgrateAttackSpeed:
                     UpgrateAttackSpeed();
                     break;
+                case BuyType.Turel:
+                    TurelType();
+                    break;
                 default:
                     break;
             }
@@ -59,38 +68,59 @@ public class WhaleMenu : MonoBehaviour
 
     private void UpgrateAttackSpeed()
     {
-        playerAttack.attackRate *= 0.85f;
-        ResourceColection.instance.resourceNumber -= BuyCosts[(int)BuyType.UpgrateAttackSpeed];
+        playerAttack.attackRate *= 0.93f;
+        ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.UpgrateAttackSpeed)]);
     }
 
     private void UpgrateAttack()
     {
-        playerAttack.damage *= 1.3f;
-        ResourceColection.instance.resourceNumber -= BuyCosts[((int)BuyType.UpgrateAttack)];
+        playerAttack.damage *= 1.05f;
+        ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.UpgrateAttack)]);
     }
 
     private void HealWhale()
     {
         whale.HealWhale(HealAmount);
-        ResourceColection.instance.resourceNumber -= BuyCosts[(int)BuyType.UpgrateAttackSpeed];
+        ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Heal)]);
     }
 
     private void GetBullet()
     {
         playerAttack.GetBullet(bulletNumber);
-        ResourceColection.instance.resourceNumber -= BuyCosts[(int)BuyType.Bullet];
+        ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Bullet)]);
     }
 
 
     private void ChangeBuyType()
     {
-        currectIndex = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length);
-        currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length);
+        currectIndex = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
+        currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
         upgrate_txt.text = upgrateTexts[currectIndex] + BuyCosts[currectIndex];
+    }
+
+    private void TurelType()
+    {
+        if(turelNumber + 1 == turelPoint.Length)
+            return;
+        SetTurel();
+        ResourceColection.instance.RemoveResource(BuyCosts[(int)BuyType.Turel]);
+    }
+
+    private void SetTurel()
+    {
+        Instantiate(turelPrefab, turelPoint[turelNumber].position, Quaternion.identity);
+        turelNumber++;
     }
 
     private void CheckPlayer()
     {
+
+        if (round.isBuymentTime == false)
+        {
+            Deactivate();
+            return;
+        }
+
         Collider[] coliders = Physics.OverlapSphere(transform.position, radious);
 
         for (int i = 0; i < coliders.Length; i++)
@@ -131,5 +161,6 @@ public enum BuyType
     Bullet,
     Heal,
     UpgrateAttack,
-    UpgrateAttackSpeed
+    UpgrateAttackSpeed,
+    Turel
 }

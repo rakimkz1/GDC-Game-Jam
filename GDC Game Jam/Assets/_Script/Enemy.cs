@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
+    public event Action OnEnemyDead;
+
     public Transform target;
     public float hp;
     public float speed;
@@ -12,6 +15,7 @@ public class Enemy : MonoBehaviour
     public float lifeTime;
     public float pushForce;
     public float stanTime;
+    public RoundSystem round;
     private bool isStaned;
 
     private Rigidbody rb;
@@ -32,16 +36,23 @@ public class Enemy : MonoBehaviour
         hp-=damage;
         rb.AddForce((target.position - transform.position).normalized * pushForce);
         if (hp <= 0f)
-            DestroyEnemy();
+            DestroyEnemy(true);
         StopCoroutine(StanTime());
         StartCoroutine(StanTime());
     }
 
+    public void DestroyEnemy(bool addResource)
+    {
+        if(addResource) 
+            AddResource();
+        whale.OnGameOver -= DestroyEnemy;
+        OnEnemyDead?.Invoke();
+
+        Destroy(gameObject);
+    }
     public void DestroyEnemy()
     {
-        AddResource();
-        whale.OnGameOver -= DestroyEnemy;
-        Destroy(gameObject);
+        DestroyEnemy(false);
     }
 
     IEnumerator StanTime()
@@ -62,7 +73,8 @@ public class Enemy : MonoBehaviour
         if (other.gameObject.tag == "whale")
         {
             whale.TakeDamage(damage);
-            DestroyEnemy();
+            if(gameObject != null)
+                DestroyEnemy();
         }
     }
 }

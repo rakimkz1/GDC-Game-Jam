@@ -6,7 +6,6 @@ public class Whale : MonoBehaviour
 {
     public float Hp;
     public float maxHp;
-    public float healAmount;
     public event Action OnGameOver;
 
     [SerializeField] private Image HpBar;
@@ -14,6 +13,7 @@ public class Whale : MonoBehaviour
     private void Start()
     {
         ShowHpBar();
+        OnGameOver += GameOverManager.instance.ShowGameOver;
     }
 
     public void TakeDamage(float damage)
@@ -37,12 +37,7 @@ public class Whale : MonoBehaviour
     }
     public void HealWhale(int number)
     {
-        int resource = ResourceColection.instance.resourceNumber;
-        if(resource >= number)
-        {
-            ResourceColection.instance.resourceNumber -= number;
-            Hp = Mathf.Clamp(Hp + healAmount, 0f, maxHp);
-            ShowHpBar();
-        }
+        Hp = Mathf.Clamp(Hp + number, 0f, maxHp);
+        ShowHpBar();
     }
 }

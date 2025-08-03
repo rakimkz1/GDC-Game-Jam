@@ -1,14 +1,14 @@
-﻿using System.Collections;
-using Unity.VisualScripting;
+﻿using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Assets._Script
 {
     public class EnemySpawner : MonoBehaviour
     {
-        public float min;
-        public float max;
+        public event Action OnAllEnemyKill;
+        public float minWait;
+        public float maxWait;
         public float spawnDistance;
         public float minSpawnAngle;
         public float maxSpawnAngle;
@@ -19,25 +19,28 @@ namespace Assets._Script
         public void Start()
         {
             whale.OnGameOver += () => StopAllCoroutines();
-            StartCoroutine(SpawnEnemy());
         }
 
-        IEnumerator SpawnEnemy()
-        { 
-            float random = Random.Range(min, max);
-            float angle = Random.Range(minSpawnAngle, maxSpawnAngle);
-            Vector3 pos = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * spawnDistance + Vector3.up;
-            yield return new WaitForSeconds(random);
+        public IEnumerator SpawnEnemy(float min,float max, int number)
+        {
+            int i = 0;
+            while (i < number)
+            {
+                float random = UnityEngine.Random.Range(min, max);
+                float angle = UnityEngine.Random.Range(minSpawnAngle, maxSpawnAngle);
+                Vector3 pos = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * spawnDistance + Vector3.up;
+                yield return new WaitForSeconds(random);
 
+                Vector3 dir = whalePos.position - pos;
+                float spawnAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
 
-            Vector3 dir = whalePos.position - pos;
-            float spawnAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-
-            GameObject target = Instantiate(enemyPrefab, pos, Quaternion.Euler(0f, spawnAngle, 0f));
-            target.GetComponent<Enemy>().whale = whale;
-            target.GetComponent<Enemy>().target = whalePos;
-
-            StartCoroutine(SpawnEnemy());
+                GameObject target = Instantiate(enemyPrefab, pos, Quaternion.Euler(0f, spawnAngle, 0f));
+                target.GetComponent<Enemy>().OnEnemyDead += GetComponent<RoundSystem>().OnEnemyDead;
+                target.GetComponent<Enemy>().whale = whale;
+                target.GetComponent<Enemy>().target = whalePos;
+                OnAllEnemyKill += ()=> target.GetComponent<Enemy>().DestroyEnemy(false);
+                i++;
+            }
         }
 
         private void OnDrawGizmosSelected()

@@ -1,5 +1,6 @@
 ﻿using Assets._Script;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 
@@ -12,13 +13,14 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform shootStartPoint;
-
+    [SerializeField] private TextMeshProUGUI bullet_txt;
     private PlayerMove playerMove;
     private bool shootable = true;
 
     private void Start()
     {
         playerMove = GetComponent<PlayerMove>();
+        ShowBulletNumber();
     }
 
     private void Update()
@@ -37,10 +39,16 @@ public class PlayerAttack : MonoBehaviour
             GameObject target = Instantiate(bulletPrefab, shootStartPoint.position, rotate);
             target.GetComponent<Bullet>().damage = damage;
             bulletNumber --;
+            ShowBulletNumber();
         }
     }
+    public void ShowBulletNumber() => bullet_txt.text = bulletNumber.ToString();
 
-    public void GetBullet(int number) => bulletNumber += number;
+    public void GetBullet(int number)
+    {
+        bulletNumber += number;
+        ShowBulletNumber();
+    }
 
     IEnumerator shootColdown()
     {

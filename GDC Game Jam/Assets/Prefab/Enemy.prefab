@@ -128,11 +128,12 @@ MonoBehaviour:
   target: {fileID: 0}
   hp: 50
   speed: 4
-  damage: 10
+  damage: 50
   whale: {fileID: 0}
-  lifeTime: 5
-  pushForce: 100
+  lifeTime: 8
+  pushForce: 180
   stanTime: 0.1
+  round: {fileID: 0}
 --- !u!65 &5668956843744071024
 BoxCollider:
   m_ObjectHideFlags: 0
