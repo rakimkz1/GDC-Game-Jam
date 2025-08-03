@@ -251,6 +251,7 @@ MonoBehaviour:
   turelPoint: {fileID: 8702276114372092833}
   bulletPrefab: {fileID: 288845312741680466, guid: f5ad9a921519ae54e8eeab23f1992ec5, type: 3}
   turelTube: {fileID: 7603042388505120052}
+  lazerSound: {fileID: 8300000, guid: 5551993a2cfea7541984d0cfa8810257, type: 3}
 --- !u!1 &9045650469527594856
 GameObject:
   m_ObjectHideFlags: 0

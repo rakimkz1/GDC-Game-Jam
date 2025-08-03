@@ -12,6 +12,9 @@ public class WhaleMenu : MonoBehaviour
     [SerializeField] private PlayerMove playerMove;
     [SerializeField] private Whale whale;
     [SerializeField] private RoundSystem round;
+    [SerializeField] private AudioClip onClickSound;
+    [SerializeField] private AudioClip onPanelOpen;
+    [SerializeField] private AudioClip onErrorButton;
     public BuyType currentType;
     public int currectIndex;
     public int[] BuyCosts;
@@ -36,7 +39,7 @@ public class WhaleMenu : MonoBehaviour
 
     private void BuyUpgrate()
     {
-        if (Input.GetKeyDown(KeyCode.E) && ResourceColection.instance.resourceNumber >= BuyCosts[currectIndex])
+        if (Input.GetKeyDown(KeyCode.E))
         {
             switch (currentType)
             {
@@ -61,28 +64,56 @@ public class WhaleMenu : MonoBehaviour
         }
     }
 
-    private void UpgrateAttackSpeed()
+    public void UpgrateAttackSpeed()
     {
-        playerAttack.attackRate *= 0.93f;
+        if (ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        {
+            AudioManager.instance.Play(onErrorButton);
+            return;
+        }
+
+        playerAttack.attackRate *= attackSpeedProportion;
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.UpgrateAttackSpeed)]);
+        AudioManager.instance.Play(onClickSound);
     }
 
-    private void UpgrateAttack()
+    public void UpgrateAttack()
     {
-        playerAttack.damage *= 1.05f;
+        if (ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        {
+            AudioManager.instance.Play(onErrorButton);
+            return;
+        }
+
+        playerAttack.damage *= attackDamageProportion;
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.UpgrateAttack)]);
+        AudioManager.instance.Play(onClickSound);
     }
 
-    private void HealWhale()
+    public void HealWhale()
     {
+        if (ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        {
+            AudioManager.instance.Play(onErrorButton);
+            return;
+        }
+
         whale.HealWhale(HealAmount);
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Heal)]);
+        AudioManager.instance.Play(onClickSound);
     }
 
-    private void GetBullet()
+    public void GetBullet()
     {
+        if (ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        {
+            AudioManager.instance.Play(onErrorButton);
+            return;
+        }
+
         playerAttack.GetBullet(bulletNumber);
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Bullet)]);
+        AudioManager.instance.Play(onClickSound);
     }
 
 
@@ -93,14 +124,22 @@ public class WhaleMenu : MonoBehaviour
         currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
         cost_txt.text = BuyCosts[currectIndex].ToString();
         upgratePanel[currectIndex].SetActive(true);
+        if (Input.mouseScrollDelta.y != -0)
+            AudioManager.instance.Play(onPanelOpen);
     }
 
-    private void TurelType()
+    public void TurelType()
     {
-        if(turelNumber + 1 == turelPoint.Length)
+
+        if(turelNumber + 1 == turelPoint.Length || ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        {
+            AudioManager.instance.Play(onErrorButton);
             return;
+        }
+
         SetTurel();
         ResourceColection.instance.RemoveResource(BuyCosts[(int)BuyType.Turel]);
+        AudioManager.instance.Play(onClickSound);
     }
 
     private void SetTurel()
@@ -143,6 +182,7 @@ public class WhaleMenu : MonoBehaviour
     private void Activate()
     {
         isAproach = true;
+        AudioManager.instance.Play(onPanelOpen, 0.6f);
         menuCanvas.SetActive(true);
     }
 

@@ -11,6 +11,7 @@ public class Turel : MonoBehaviour
     [SerializeField] private Transform turelPoint;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform turelTube;
+    [SerializeField] private AudioClip lazerSound;
     private bool isShootable = true;
     private Quaternion turelRotation;
     private Transform currentTarget;
@@ -28,6 +29,7 @@ public class Turel : MonoBehaviour
 
         GameObject bullet = BulletPool.instance.GetBullet(turelPoint.position, turelRotation);
         bullet.GetComponent<Bullet>().damage = Damage;
+        AudioManager.instance.Play(lazerSound, 0.65f);
 
         StartCoroutine(WaitShoot());
     }

@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public float pushForce;
     public float stanTime;
     public RoundSystem round;
+    public GameObject explotionEffect;
     private bool isStaned;
 
     private Rigidbody rb;
@@ -47,6 +48,7 @@ public class Enemy : MonoBehaviour
             AddResource();
         whale.OnGameOver -= DestroyEnemy;
         OnEnemyDead?.Invoke();
+        Instantiate(explotionEffect, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

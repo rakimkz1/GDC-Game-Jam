@@ -15,6 +15,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform shootStartPoint;
     [SerializeField] private TextMeshProUGUI bullet_txt;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioClip lazerSound;
     private PlayerMove playerMove;
     private bool shootable = true;
 
@@ -41,6 +42,7 @@ public class PlayerAttack : MonoBehaviour
             target.GetComponent<Bullet>().damage = damage;
             bulletNumber --;
             anim.SetTrigger("Shoot");
+            AudioManager.instance.Play(lazerSound);
             ShowBulletNumber();
         }
     }
