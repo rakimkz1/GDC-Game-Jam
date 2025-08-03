@@ -1,10 +1,5 @@
-﻿using JetBrains.Annotations;
-using System;
-using System.Collections;
-using System.ComponentModel.Design.Serialization;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 
 public class WhaleMenu : MonoBehaviour
@@ -12,7 +7,7 @@ public class WhaleMenu : MonoBehaviour
     public bool isAproach;
     public float radious;
     [SerializeField] private GameObject menuCanvas;
-    [SerializeField] private TextMeshProUGUI upgrate_txt;
+    [SerializeField] private TextMeshProUGUI cost_txt;
     [SerializeField] private PlayerAttack playerAttack;
     [SerializeField] private PlayerMove playerMove;
     [SerializeField] private Whale whale;
@@ -20,7 +15,7 @@ public class WhaleMenu : MonoBehaviour
     public BuyType currentType;
     public int currectIndex;
     public int[] BuyCosts;
-    public string[] upgrateTexts;
+    public GameObject[] upgratePanel;
     public int bulletNumber;
     public int HealAmount;
     public float attackDamageProportion;
@@ -93,9 +88,11 @@ public class WhaleMenu : MonoBehaviour
 
     private void ChangeBuyType()
     {
+        upgratePanel[currectIndex].SetActive(false);
         currectIndex = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
         currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
-        upgrate_txt.text = upgrateTexts[currectIndex] + BuyCosts[currectIndex];
+        cost_txt.text = BuyCosts[currectIndex].ToString();
+        upgratePanel[currectIndex].SetActive(true);
     }
 
     private void TurelType()
