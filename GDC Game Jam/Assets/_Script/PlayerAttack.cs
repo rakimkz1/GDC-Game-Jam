@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private AudioClip lazerSound;
     private PlayerMove playerMove;
-    private bool shootable = true;
+    public bool shootable = true;
 
     private void Start()
     {

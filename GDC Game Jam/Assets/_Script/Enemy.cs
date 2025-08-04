@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent (typeof(Rigidbody))]
@@ -80,6 +81,18 @@ public class Enemy : MonoBehaviour
             whale.TakeDamage(damage);
             if(gameObject != null)
                 DestroyEnemy();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider != null && collision.gameObject.GetComponent <PlayerStun>() != null)
+        {
+            PlayerStun stun = collision.gameObject.GetComponent<PlayerStun>();
+            if(stun.isStunable == true)
+            {
+                stun.Stun(transform);
+            }
         }
     }
 }
