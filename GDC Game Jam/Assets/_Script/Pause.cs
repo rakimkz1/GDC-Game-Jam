@@ -1,3 +1,4 @@
+using System;
 using Assets._Script;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +9,27 @@ public class Pause : MonoBehaviour
 {
     public GameObject button;
     public GameObject panel;
-	
+    
+    private bool isinpause = false;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isinpause)
+                ResumeGame();
+            else 
+                PauseGame();
+        }
+    }
+
     public void PauseGame()
     {
         //Freeze true
         button.SetActive(false);
         Time.timeScale = 0f;
         panel.SetActive(true);
+        isinpause = true;
     }
 
     public void ResumeGame()
@@ -23,6 +38,7 @@ public class Pause : MonoBehaviour
         button.SetActive(true);
         Time.timeScale = 1f;
         panel.SetActive(false);
+        isinpause = false;
     }
 
     public void Menu()
