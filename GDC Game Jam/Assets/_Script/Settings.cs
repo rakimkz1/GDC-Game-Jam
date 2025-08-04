@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Settings : MonoBehaviour
 {
-    public static Settings instance;
     public static event Action musicVolumeChanged;
     public static event Action soundVolumeChanged;
     
@@ -17,16 +16,6 @@ public class Settings : MonoBehaviour
     public float prefabMusicVolume;
     public float musicVolume = 1.0f;
     public float soundVolume = 1.0f;
-
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {   
-            Destroy(this.gameObject);
-            return;
-        }
-        instance = this;
-    }
 
     private void Start()
     {

@@ -26,6 +26,7 @@ public class WhaleMenu : MonoBehaviour
     public GameObject turelPrefab;
     public Transform[] turelPoint;
     private int turelNumber;
+    private float currentScroll = 0f;
     private void Update()
     {
         CheckPlayer();
@@ -120,17 +121,33 @@ public class WhaleMenu : MonoBehaviour
     private void ChangeBuyType()
     {
         upgratePanel[currectIndex].SetActive(false);
-        int i = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
+        int i = Mathf.Clamp(currectIndex + CheckBuyType(), 0, BuyCosts.Length);
         if (Input.GetKeyDown(KeyCode.R))
         {
             i = i + 1 >= BuyCosts.Length ? 0 : i + 1;
         }
+        if (i != currectIndex)
+            AudioManager.instance.Play(onPanelOpen);
         currectIndex = i;
         currentType = (BuyType)i;
         cost_txt.text = BuyCosts[currectIndex].ToString();
         upgratePanel[currectIndex].SetActive(true);
-        if (Mathf.Clamp(Input.mouseScrollDelta.y + currectIndex, 0, BuyCosts.Length -1) != currectIndex)
-            AudioManager.instance.Play(onPanelOpen);
+    }
+
+    private int CheckBuyType()
+    {
+        currentScroll += Input.mouseScrollDelta.y * Time.deltaTime;
+        if(currentScroll > 0.1f)
+        {
+            currentScroll = 0f;
+            return 1;
+        }
+        else if(currentScroll < -0.1f)
+        {
+            currentScroll = 0f;
+            return -1;
+        }
+        return 0;
     }
 
     public void TurelType()

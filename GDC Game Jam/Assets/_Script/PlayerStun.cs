@@ -23,12 +23,13 @@ public class PlayerStun : MonoBehaviour
     public async Task Stun(Transform pos)
     {
         GetComponent<PlayerAttack>().shootable = false;
+        GetComponent<PlayerAttack>().StopAllCoroutines();
         GetComponent<PlayerMove>().isMoveable = false;
         isStunable = false;
         anim.SetBool("isStuned", true);
         AudioManager.instance.Play(stunAudio);
         headSpine.Play();
-        headSpineEffect.Play();
+        headSpine.gameObject.SetActive(true);
         Vector3 dir = -(pos.position - transform.position);
         if(Vector3.Distance(dir, pos.right) < Vector3.Distance(dir, -pos.right))
             dir = (2f * dir.normalized + pos.right).normalized * Force;
@@ -38,8 +39,7 @@ public class PlayerStun : MonoBehaviour
         await Task.Delay((int)(ForceStuningTime * 1000f));
         rb.velocity = Vector3.zero;
         await Task.Delay((int)(StuningTime * 1000f));
-        headSpine.Stop();
-        headSpineEffect.Stop();
+        headSpineEffect.gameObject.SetActive(false);
         anim.SetBool("isStuned", false);
         GetComponent<PlayerAttack>().shootable = true;
         GetComponent<PlayerMove>().isMoveable = true;

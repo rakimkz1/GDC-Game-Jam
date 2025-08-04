@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
     public AudioSource backGround;
+    public Settings setting;
     private AudioSource source;
 
     private void Awake()
@@ -16,12 +17,12 @@ public class AudioManager : MonoBehaviour
     }
     public void SetMusicVolume()
     {
-        backGround.volume = Settings.instance.musicVolume;
+        backGround.volume = setting.musicVolume;
     }
 
     public void Play(AudioClip audio, float volume)
     {
-        source.volume = volume * Settings.instance.soundVolume;
+        source.volume = volume * setting.soundVolume;
         source.PlayOneShot(audio);
     }
 

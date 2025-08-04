@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 6910819232941736596}
   - component: {fileID: 4478332957447873766}
   - component: {fileID: 7252942979185472916}
+  - component: {fileID: 7374140878327763600}
   m_Layer: 0
   m_Name: tankEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,15 +98,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   hp: 100
-  speed: 2
+  speed: 2.5
   damage: 25
   whale: {fileID: 0}
   lifeTime: 30
-  pushForce: 80
+  pushForce: 0
   stanTime: 0.1
   round: {fileID: 0}
   explotionEffect: {fileID: 8389642244725808887, guid: 9fb41eca2a6a06c4292ad78051549c7e, type: 3}
   takeDamage: {fileID: 8300000, guid: 5ed0a16d47dbb604ea94adaae19a0171, type: 3}
+--- !u!65 &7374140878327763600
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154920534374213460}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.2401853, y: 2.9334342, z: 3.2000918}
+  m_Center: {x: 0, y: 0.9667171, z: -0.03799224}
 --- !u!1001 &3948611187303167370
 PrefabInstance:
   m_ObjectHideFlags: 0
