@@ -23,7 +23,7 @@ public class GameOverManager : MonoBehaviour
     {
         int bestScore = PlayerPrefs.GetInt("BestScore");
         PlayerPrefs.SetInt("BestScore", Mathf.Max(bestScore, EnemySpawner.instance.killScore));
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void OnMenu()

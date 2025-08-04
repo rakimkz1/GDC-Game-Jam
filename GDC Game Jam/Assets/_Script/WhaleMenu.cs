@@ -15,6 +15,8 @@ public class WhaleMenu : MonoBehaviour
     [SerializeField] private AudioClip onClickSound;
     [SerializeField] private AudioClip onPanelOpen;
     [SerializeField] private AudioClip onErrorButton;
+    [SerializeField] private AudioClip bulletRestore;
+    [SerializeField] private AudioClip healSound;
     public BuyType currentType;
     public int currectIndex;
     public int[] BuyCosts;
@@ -101,7 +103,7 @@ public class WhaleMenu : MonoBehaviour
 
         whale.HealWhale(HealAmount);
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Heal)]);
-        AudioManager.instance.Play(onClickSound);
+        AudioManager.instance.Play(healSound);
     }
 
     public void GetBullet()
@@ -114,14 +116,14 @@ public class WhaleMenu : MonoBehaviour
 
         playerAttack.GetBullet(bulletNumber);
         ResourceColection.instance.RemoveResource(BuyCosts[((int)BuyType.Bullet)]);
-        AudioManager.instance.Play(onClickSound);
+        AudioManager.instance.Play(bulletRestore);
     }
 
 
     private void ChangeBuyType()
     {
         upgratePanel[currectIndex].SetActive(false);
-        int i = Mathf.Clamp(currectIndex + CheckBuyType(), 0, BuyCosts.Length);
+        int i = Mathf.Clamp(currectIndex + CheckBuyType(), 0, BuyCosts.Length - 1);
         if (Input.GetKeyDown(KeyCode.R))
         {
             i = i + 1 >= BuyCosts.Length ? 0 : i + 1;

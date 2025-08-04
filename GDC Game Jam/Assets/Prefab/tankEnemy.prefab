@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  hp: 100
+  hp: 120
   speed: 2.5
   damage: 25
   whale: {fileID: 0}

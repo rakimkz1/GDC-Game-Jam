@@ -1827,7 +1827,7 @@ MonoBehaviour:
   currentRound: 0
   enemyNumber: 8
   enemyProportion: 1.5
-  spawnTimeProportion: 0.8
+  spawnTimeProportion: 0.7
   waitAfterRound: 15
   isBuymentTime: 0
   whale: {fileID: 1358300010}
@@ -3737,7 +3737,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -8568,7 +8568,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fc1343a03dfc3b648a9053959b695dca, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -10299,9 +10299,11 @@ MonoBehaviour:
   onClickSound: {fileID: 8300000, guid: 60330b0c74f1fc24dab101ac25ca4fce, type: 3}
   onPanelOpen: {fileID: 8300000, guid: 94195de1881971c4e934e76fdbd0c6b3, type: 3}
   onErrorButton: {fileID: 8300000, guid: f4f018c00f60bac4c905ba119176985d, type: 3}
+  bulletRestore: {fileID: 8300000, guid: c606c39991fc1f542be7831d44a96d3d, type: 3}
+  healSound: {fileID: 8300000, guid: 6776001698207de4c946d13687fd6a1f, type: 3}
   currentType: 0
   currectIndex: 0
-  BuyCosts: 050000000300000008000000090000003c000000
+  BuyCosts: 04000000060000000a0000000c00000050000000
   upgratePanel:
   - {fileID: 1765704360}
   - {fileID: 1728525039}
@@ -10310,8 +10312,8 @@ MonoBehaviour:
   - {fileID: 1624824951}
   bulletNumber: 50
   HealAmount: 10
-  attackDamageProportion: 1.08
-  attackSpeedProportion: 0.98
+  attackDamageProportion: 1.05
+  attackSpeedProportion: 0.97
   turelPrefab: {fileID: 9019741480704889378, guid: 8666bd8193c1f11429f275c63401cbd2, type: 3}
   turelPoint:
   - {fileID: 448312589}
@@ -11143,7 +11145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!64 &1633155429
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -11674,7 +11676,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -16704,7 +16706,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -22168,7 +22170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -0.000061035156, y: 89.55841}
+  m_AnchoredPosition: {x: 0, y: 89.55835}
   m_SizeDelta: {x: 0, y: 179.1168}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2068313357

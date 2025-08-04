@@ -7,6 +7,7 @@ public class CutScene : MonoBehaviour
 {
     public void EndCutscene()
     {
+        PlayerPrefs.DeleteAll();
         SceneManager.LoadScene(2);
     }
 }
