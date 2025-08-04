@@ -120,8 +120,13 @@ public class WhaleMenu : MonoBehaviour
     private void ChangeBuyType()
     {
         upgratePanel[currectIndex].SetActive(false);
-        currectIndex = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
-        currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
+        int i = Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            i = i + 1 >= BuyCosts.Length ? 0 : i + 1;
+        }
+        currectIndex = i;
+        currentType = (BuyType)i;
         cost_txt.text = BuyCosts[currectIndex].ToString();
         upgratePanel[currectIndex].SetActive(true);
         if (Mathf.Clamp(Input.mouseScrollDelta.y + currectIndex, 0, BuyCosts.Length -1) != currectIndex)

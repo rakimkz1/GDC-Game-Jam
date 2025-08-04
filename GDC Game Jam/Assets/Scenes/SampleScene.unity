@@ -927,6 +927,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dba71ee585d6fc5499ee72be45b1dad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  backGround: {fileID: 168637744}
 --- !u!4 &168637746
 Transform:
   m_ObjectHideFlags: 0
@@ -1787,9 +1788,11 @@ MonoBehaviour:
   spawnDistance: 23
   minSpawnAngle: -2.88
   maxSpawnAngle: -0.3
+  killScore: 0
   whale: {fileID: 1358300010}
   whalePos: {fileID: 1358300012}
   enemyPrefab: {fileID: 458024745992630235, guid: 3d435e6155ed77e458b08c11dd0c2dac, type: 3}
+  txt_KillScore: {fileID: 1887653661}
 --- !u!4 &541627975
 Transform:
   m_ObjectHideFlags: 0
@@ -2742,6 +2745,7 @@ MonoBehaviour:
   PostStunedTime: 2
   isStunable: 1
   anim: {fileID: 485162873}
+  stunAudio: {fileID: 0}
 --- !u!1001 &893672098
 PrefabInstance:
   m_ObjectHideFlags: 0
