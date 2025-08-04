@@ -60,16 +60,15 @@ public class RoundSystem : MonoBehaviour
     {
         txt_NextRound.gameObject.SetActive(true);
         AudioManager.instance.Play(notification);
-        txt_NextRound.text = $"Round : {currentRound + 1}";
+        txt_NextRound.text = $"Round : {currentRound + 2}";
 
-        //DOTween sequence = DOTween.Sequence();
-        //sequence.
-
-        txt_NextRound.gameObject.transform.DOScale(1f, 0.6f).From(0f).SetEase(Ease.InExpo).SetDelay(100f).OnComplete(() =>
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(txt_NextRound.gameObject.transform.DOScale(1f, 2.5f).From(0f).SetEase(Ease.OutElastic));
+        sequence.Append(txt_NextRound.gameObject.transform.DOScale(0f, 0.8f).SetEase(Ease.InExpo).OnComplete(()=>
         {
-            txt_NextRound.gameObject.transform.DOScale(0f, 0.6f).SetEase(Ease.InExpo).OnComplete(() => StartCoroutine(WaitRound()));
             txt_NextRound.gameObject.SetActive(false);
-        });
+            StartCoroutine(WaitRound());
+        }));
     }
 
     IEnumerator WaitRound()

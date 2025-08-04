@@ -124,7 +124,7 @@ public class WhaleMenu : MonoBehaviour
         currentType = (BuyType)Mathf.Clamp(currectIndex + (int)Input.mouseScrollDelta.y, 0, BuyCosts.Length - 1);
         cost_txt.text = BuyCosts[currectIndex].ToString();
         upgratePanel[currectIndex].SetActive(true);
-        if (Input.mouseScrollDelta.y != -0)
+        if (Mathf.Clamp(Input.mouseScrollDelta.y + currectIndex, 0, BuyCosts.Length -1) != currectIndex)
             AudioManager.instance.Play(onPanelOpen);
     }
 
