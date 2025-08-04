@@ -1,3 +1,4 @@
+using Assets._Script;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class Pause : MonoBehaviour
     {
         //Freeze true
         button.SetActive(false);
+        Time.timeScale = 0f;
         panel.SetActive(true);
     }
 
@@ -19,11 +21,14 @@ public class Pause : MonoBehaviour
     {
         // Freeze false
         button.SetActive(true);
+        Time.timeScale = 1f;
         panel.SetActive(false);
     }
 
     public void Menu()
     {
+        int bestScore = PlayerPrefs.GetInt("BestScore");
+        PlayerPrefs.SetInt("BestScore",Mathf.Max (bestScore, EnemySpawner.instance.killScore));
         SceneManager.LoadScene(0);
     }
 	

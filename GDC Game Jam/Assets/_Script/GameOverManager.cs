@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets._Script;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameOverManager : MonoBehaviour
 {
@@ -13,15 +14,22 @@ public class GameOverManager : MonoBehaviour
     public void ShowGameOver()
     {
         GameOverPanel.SetActive(true);
+        int bestScore = PlayerPrefs.GetInt("BestScore");
+        PlayerPrefs.SetInt("BestScore", Mathf.Max(bestScore, EnemySpawner.instance.killScore));
+        Time.timeScale = 0f;
     }
 
     public void OnRestartGame()
     {
+        int bestScore = PlayerPrefs.GetInt("BestScore");
+        PlayerPrefs.SetInt("BestScore", Mathf.Max(bestScore, EnemySpawner.instance.killScore));
         SceneManager.LoadScene(1);
     }
 
     public void OnMenu()
     {
+        int bestScore = PlayerPrefs.GetInt("BestScore");
+        PlayerPrefs.SetInt("BestScore", Mathf.Max(bestScore, EnemySpawner.instance.killScore));
         SceneManager.LoadScene(0);
     }
 

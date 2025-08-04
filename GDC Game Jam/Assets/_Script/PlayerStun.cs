@@ -11,6 +11,7 @@ public class PlayerStun : MonoBehaviour
     public float PostStunedTime;
     public bool isStunable;
     [SerializeField] private Animator anim;
+    [SerializeField] private AudioClip stunAudio;
     private Rigidbody rb;
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class PlayerStun : MonoBehaviour
         GetComponent<PlayerMove>().isMoveable = false;
         isStunable = false;
         anim.SetBool("isStuned", true);
+        AudioManager.instance.Play(stunAudio);
         Vector3 dir = -(pos.position - transform.position);
         if(Vector3.Distance(dir, pos.right) < Vector3.Distance(dir, -pos.right))
             dir = (2f * dir.normalized + pos.right).normalized * Force;

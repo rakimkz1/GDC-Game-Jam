@@ -131,7 +131,7 @@ public class WhaleMenu : MonoBehaviour
     public void TurelType()
     {
 
-        if(turelNumber + 1 == turelPoint.Length || ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
+        if(turelNumber == turelPoint.Length || ResourceColection.instance.resourceNumber < BuyCosts[currectIndex])
         {
             AudioManager.instance.Play(onErrorButton);
             return;

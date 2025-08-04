@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 namespace Assets._Script
@@ -12,12 +13,15 @@ namespace Assets._Script
         public float spawnDistance;
         public float minSpawnAngle;
         public float maxSpawnAngle;
+        public int killScore;
         [SerializeField] private Whale whale;
         [SerializeField] private Transform whalePos;
         [SerializeField] private GameObject enemyPrefab;
-
+        [SerializeField] private TextMeshProUGUI txt_KillScore;
+        public static EnemySpawner instance;
         public void Start()
         {
+            instance = this;
             whale.OnGameOver += () => StopAllCoroutines();
         }
 
@@ -36,11 +40,18 @@ namespace Assets._Script
 
                 GameObject target = Instantiate(enemyPrefab, pos, Quaternion.Euler(0f, spawnAngle, 0f));
                 target.GetComponent<Enemy>().OnEnemyDead += GetComponent<RoundSystem>().OnEnemyDead;
+                target.GetComponent<Enemy>().OnEnemyKilled += OnEnemyKilled;
                 target.GetComponent<Enemy>().whale = whale;
                 target.GetComponent<Enemy>().target = whalePos;
                 OnAllEnemyKill += ()=> target.GetComponent<Enemy>().DestroyEnemy(false);
                 i++;
             }
+        }
+
+        public void OnEnemyKilled()
+        {
+            killScore++;
+            txt_KillScore.text = killScore.ToString();
         }
 
         private void OnDrawGizmosSelected()

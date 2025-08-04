@@ -29,6 +29,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Rotate()
     {
+        if (Time.timeScale == 0f)
+            return;
         float angle = Mathf.Atan2(Diraction.x, Diraction.z) * Mathf.Rad2Deg;
         playerBody.transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }

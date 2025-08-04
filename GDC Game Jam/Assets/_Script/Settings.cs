@@ -13,7 +13,8 @@ public class Settings : MonoBehaviour
 
     public string musicName = "Music";
     public string soundName = "Sound";
-    
+
+    public float prefabMusicVolume;
     public float musicVolume = 1.0f;
     public float soundVolume = 1.0f;
 
@@ -41,7 +42,7 @@ public class Settings : MonoBehaviour
     public void SetMusic(float value)
     {
         PlayerPrefs.SetFloat(musicName, value);
-        musicVolume = value;
+        musicVolume = value * prefabMusicVolume;
         musicVolumeChanged?.Invoke();
     }
 

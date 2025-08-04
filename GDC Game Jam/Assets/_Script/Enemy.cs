@@ -7,6 +7,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public event Action OnEnemyDead;
+    public event Action OnEnemyKilled;
 
     public Transform target;
     public float hp;
@@ -52,6 +53,7 @@ public class Enemy : MonoBehaviour
             AddResource();
         whale.OnGameOver -= DestroyEnemy;
         OnEnemyDead?.Invoke();
+        OnEnemyKilled?.Invoke();
         Instantiate(explotionEffect, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
