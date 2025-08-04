@@ -12,6 +12,8 @@ public class PlayerStun : MonoBehaviour
     public bool isStunable;
     [SerializeField] private Animator anim;
     [SerializeField] private AudioClip stunAudio;
+    [SerializeField] private AudioSource headSpine;
+    [SerializeField] private ParticleSystem headSpineEffect;
     private Rigidbody rb;
     private void Awake()
     {
@@ -25,6 +27,8 @@ public class PlayerStun : MonoBehaviour
         isStunable = false;
         anim.SetBool("isStuned", true);
         AudioManager.instance.Play(stunAudio);
+        headSpine.Play();
+        headSpineEffect.Play();
         Vector3 dir = -(pos.position - transform.position);
         if(Vector3.Distance(dir, pos.right) < Vector3.Distance(dir, -pos.right))
             dir = (2f * dir.normalized + pos.right).normalized * Force;
@@ -34,6 +38,8 @@ public class PlayerStun : MonoBehaviour
         await Task.Delay((int)(ForceStuningTime * 1000f));
         rb.velocity = Vector3.zero;
         await Task.Delay((int)(StuningTime * 1000f));
+        headSpine.Stop();
+        headSpineEffect.Stop();
         anim.SetBool("isStuned", false);
         GetComponent<PlayerAttack>().shootable = true;
         GetComponent<PlayerMove>().isMoveable = true;

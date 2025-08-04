@@ -16,7 +16,7 @@ namespace Assets._Script
         public int killScore;
         [SerializeField] private Whale whale;
         [SerializeField] private Transform whalePos;
-        [SerializeField] private GameObject enemyPrefab;
+        [SerializeField] private GameObject[] enemyPrefab;
         [SerializeField] private TextMeshProUGUI txt_KillScore;
         public static EnemySpawner instance;
         public void Start()
@@ -37,15 +37,20 @@ namespace Assets._Script
 
                 Vector3 dir = whalePos.position - pos;
                 float spawnAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-
-                GameObject target = Instantiate(enemyPrefab, pos, Quaternion.Euler(0f, spawnAngle, 0f));
+                GameObject target = GetEnemy(pos, spawnAngle);
                 target.GetComponent<Enemy>().OnEnemyDead += GetComponent<RoundSystem>().OnEnemyDead;
                 target.GetComponent<Enemy>().OnEnemyKilled += OnEnemyKilled;
                 target.GetComponent<Enemy>().whale = whale;
                 target.GetComponent<Enemy>().target = whalePos;
-                OnAllEnemyKill += ()=> target.GetComponent<Enemy>().DestroyEnemy(false);
+                OnAllEnemyKill += () => target.GetComponent<Enemy>().DestroyEnemy(false);
                 i++;
             }
+        }
+
+        private GameObject GetEnemy(Vector3 pos, float spawnAngle)
+        {
+            int index = (UnityEngine.Random.Range(0, 10)) < 9 ? 0 : 1; 
+            return Instantiate(enemyPrefab[index], pos, Quaternion.Euler(0f, spawnAngle, 0f));
         }
 
         public void OnEnemyKilled()

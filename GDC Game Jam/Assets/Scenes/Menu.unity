@@ -19410,6 +19410,7 @@ MonoBehaviour:
   soundSlider: {fileID: 709650810}
   musicName: Music
   soundName: Sound
+  prefabMusicVolume: 0
   musicVolume: 1
   soundVolume: 1
 --- !u!1 &2020459040
