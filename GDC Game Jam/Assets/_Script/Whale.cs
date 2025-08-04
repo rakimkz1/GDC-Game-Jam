@@ -9,6 +9,7 @@ public class Whale : MonoBehaviour
     public event Action OnGameOver;
 
     [SerializeField] private Image HpBar;
+    [SerializeField] private AudioClip electric;
 
     private void Start()
     {
@@ -23,6 +24,8 @@ public class Whale : MonoBehaviour
 
         if (Hp <= 0f)
             GameOver();
+
+        AudioManager.instance.Play(electric);
     }
 
     private void GameOver()

@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
     public float stanTime;
     public RoundSystem round;
     public GameObject explotionEffect;
+    [SerializeField] private AudioClip takeDamage;
     private bool isStaned;
 
     private Rigidbody rb;
@@ -38,6 +39,8 @@ public class Enemy : MonoBehaviour
         rb.AddForce(-(target.position - transform.position).normalized * pushForce);
         if (hp <= 0f)
             DestroyEnemy(true);
+
+        AudioManager.instance.Play(takeDamage);
         StopCoroutine(StanTime());
         StartCoroutine(StanTime());
     }

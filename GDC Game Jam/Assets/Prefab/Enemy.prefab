@@ -137,6 +137,7 @@ MonoBehaviour:
   stanTime: 0.12
   round: {fileID: 0}
   explotionEffect: {fileID: 8389642244725808887, guid: c17b97366258eb044b87ee2598b29f1a, type: 3}
+  takeDamage: {fileID: 8300000, guid: 5ed0a16d47dbb604ea94adaae19a0171, type: 3}
 --- !u!65 &5668956843744071024
 BoxCollider:
   m_ObjectHideFlags: 0

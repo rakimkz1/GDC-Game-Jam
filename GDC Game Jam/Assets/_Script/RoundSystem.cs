@@ -1,4 +1,5 @@
 ﻿using Assets._Script;
+using DG.Tweening;
 using System;
 using System.Collections;
 using TMPro;
@@ -17,6 +18,8 @@ public class RoundSystem : MonoBehaviour
     [SerializeField] private Whale whale;
     [SerializeField] private TextMeshProUGUI textCounter;
     [SerializeField] private TextMeshProUGUI txt_Round;
+    [SerializeField] private TextMeshProUGUI txt_NextRound;
+    [SerializeField] private AudioClip notification;
     private void Awake()
     {
         enemySpawner = GetComponent<EnemySpawner>();
@@ -48,11 +51,27 @@ public class RoundSystem : MonoBehaviour
         currentEnemyNumber--;
         if (currentEnemyNumber == 0)
         {
-            StartCoroutine(WaitRound());
+            NextRound();
         }
             
     }
     
+    private void NextRound()
+    {
+        txt_NextRound.gameObject.SetActive(true);
+        AudioManager.instance.Play(notification);
+        txt_NextRound.text = $"Round : {currentRound + 1}";
+
+        //DOTween sequence = DOTween.Sequence();
+        //sequence.
+
+        txt_NextRound.gameObject.transform.DOScale(1f, 0.6f).From(0f).SetEase(Ease.InExpo).SetDelay(100f).OnComplete(() =>
+        {
+            txt_NextRound.gameObject.transform.DOScale(0f, 0.6f).SetEase(Ease.InExpo).OnComplete(() => StartCoroutine(WaitRound()));
+            txt_NextRound.gameObject.SetActive(false);
+        });
+    }
+
     IEnumerator WaitRound()
     {
         isBuymentTime = true;
