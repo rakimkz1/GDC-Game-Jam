@@ -2669,6 +2669,7 @@ MonoBehaviour:
   PostStunedTime: 2
   isStunable: 1
   anim: {fileID: 485162873}
+  stunAudio: {fileID: 8300000, guid: 60330b0c74f1fc24dab101ac25ca4fce, type: 3}
 --- !u!1001 &893672098
 PrefabInstance:
   m_ObjectHideFlags: 0
